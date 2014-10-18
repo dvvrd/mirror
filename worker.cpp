@@ -18,6 +18,7 @@ Worker::Worker(QString const &logPath, QString const &appPath, QStringList const
 	, mStartupArguments(args)
 	, mSpeed(speed)
 {
+	mStream.setCodec("UTF-8");
 }
 
 void Worker::go()

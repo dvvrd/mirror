@@ -62,9 +62,9 @@ void EntryProcessor::processMouseEntry()
 					, title, QString::number(width), QString::number(height)));
 
 	if (action == "press") {
-//		Os::pressMouse(QPoint(x, y), button, title, QSize(width, height));
+		Os::pressMouse(QPoint(x, y), button, title, QSize(width, height));
 	} else if (action == "release") {
-//		Os::releaseMouse(QPoint(x, y), button, title, QSize(width, height));
+		Os::releaseMouse(QPoint(x, y), button, title, QSize(width, height));
 	}
 }
 
@@ -91,7 +91,7 @@ void EntryProcessor::processWheelEntry()
 			.arg(QString::number(deltaX), QString::number(deltaY), QString::number(x), QString::number(y)
 					, title, QString::number(width), QString::number(height)));
 
-	//Os::simulateWheel(deltaX, deltaY, QPoint(x, y), title, QSize(width, height));
+	Os::simulateWheel(deltaX, deltaY, QPoint(x, y), title, QSize(width, height));
 }
 
 void EntryProcessor::processKeyEntry()
@@ -110,9 +110,9 @@ void EntryProcessor::processKeyEntry()
 			.arg(action, QString::number(static_cast<int>(key)), QString::number(static_cast<int>(modifiers), 16)));
 
 	if (action == "press") {
-//		Os::pressKey(key, modifiers);
+		Os::pressKey(key, modifiers);
 	} else if (action == "release") {
-//		Os::releaseKey(key, modifiers);
+		Os::releaseKey(key, modifiers);
 	}
 }
 
@@ -128,5 +128,5 @@ void EntryProcessor::processGestureMovement()
 
 	VERBOSE(QString("Moving mouse to pos=(%1,%2)...\n").arg(QString::number(x), QString::number(y)));
 
-//	Os::moveMouse(QPoint(x, y), QString());
+	Os::moveMouse(QPoint(x, y), QString());
 }
