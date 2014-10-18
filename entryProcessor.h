@@ -15,6 +15,7 @@ private:
 	void processMouseEntry();
 	void processWheelEntry();
 	void processKeyEntry();
+	void processGestureMovement();
 
 	LogEntry const &mEntry;
 };

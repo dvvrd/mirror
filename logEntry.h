@@ -7,7 +7,7 @@ class LogEntry
 {
 public:
 	/// Represents six logging levels supported by this tool.
-	enum Level
+	enum class Level
 	{
 		trace = 0
 		, debug

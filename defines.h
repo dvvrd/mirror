@@ -4,8 +4,16 @@
 
 #define PRINT(x) printf(qPrintable(x))
 
+#define VERBOSING
+
+#ifdef VERBOSING
+#define VERBOSE(x) PRINT(x)
+#else
+#define VERBOSE(x)
+#endif
+
 /// Represents the speed of the user actions reproducing.
-enum Speed
+enum class Speed
 {
 	/// The actions are reproduced with just the same intervals between them as user made.
 	original = 0

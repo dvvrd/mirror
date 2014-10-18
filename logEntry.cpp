@@ -6,7 +6,7 @@
 #include "defines.h"
 
 LogEntry::LogEntry()
-	: mLevel(fatal)
+	: mLevel(Level::fatal)
 	, mTimestamp(0)
 {
 }
@@ -45,29 +45,29 @@ LogEntry::Level LogEntry::stringToLevel(QString const &level) const
 	QString const preparedLevel = level.toUpper().trimmed();
 
 	if (preparedLevel == "TRACE") {
-		return trace;
+		return Level::trace;
 	}
 
 	if (preparedLevel == "DEBUG") {
-		return debug;
+		return Level::debug;
 	}
 
 	if (preparedLevel == "INFO") {
-		return info;
+		return Level::info;
 	}
 
 	if (preparedLevel == "WARN") {
-		return warning;
+		return Level::warning;
 	}
 
 	if (preparedLevel == "ERROR") {
-		return error;
+		return Level::error;
 	}
 
 	if (preparedLevel == "FATAL") {
-		return fatal;
+		return Level::fatal;
 	}
 
 	PRINT("Unknown logging level " + level + ". Falling back to TRACE.\n");
-	return trace;
+	return Level::trace;
 }

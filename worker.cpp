@@ -65,7 +65,7 @@ void Worker::readEntry()
 
 void Worker::invokeEntry()
 {
-	PRINT("Invoking " + mCurrentEntry.message() + "\n");
+	VERBOSE("Invoking " + mCurrentEntry.message() + "\n");
 	EntryProcessor processor(mCurrentEntry);
 	processor.process();
 	readEntry();
@@ -74,11 +74,11 @@ void Worker::invokeEntry()
 int Worker::speedUp(int ms) const
 {
 	switch (mSpeed) {
-	case original:
+	case Speed::original:
 		return ms;
-	case fast:
+	case Speed::fast:
 		return qMax(ms / fastModeAcceleration, minimalEventsInterval);
-	case fastest:
+	case Speed::fastest:
 		return qMin(ms, minimalEventsInterval);
 	default:
 		return ms;

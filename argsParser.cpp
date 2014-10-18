@@ -6,7 +6,7 @@ QString const speedKey = "speed";
 
 ArgsParser::ArgsParser(QStringList const &args)
 	: mHelpMode(false)
-	, mSpeed(original)
+	, mSpeed(Speed::original)
 {
 	int const startupArgsSeparatorIndex = args.indexOf("--");
 	int const startupArgsBegin = startupArgsSeparatorIndex > 0 ? startupArgsSeparatorIndex : args.length();
@@ -98,17 +98,17 @@ Speed ArgsParser::stringToSpeed(QString const &rawSpeed, bool &ok) const
 
 	QString const speed = rawSpeed.toLower().trimmed();
 	if (speed == "original") {
-		return original;
+		return Speed::original;
 	}
 
 	if (speed == "fast") {
-		return fast;
+		return Speed::fast;
 	}
 
 	if (speed == "fastest") {
-		return fastest;
+		return Speed::fastest;
 	}
 
 	ok = false;
-	return original;
+	return Speed::original;
 }
