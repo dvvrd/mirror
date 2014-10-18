@@ -96,7 +96,7 @@ void EntryProcessor::processWheelEntry()
 
 void EntryProcessor::processKeyEntry()
 {
-	QRegExp const regexp("Key (\\w+) with (\\d+) modifiers QFlags\\(0x(\\d+)\\)");
+	QRegExp const regexp("Key (\\w+) with (\\d+) modifiers QFlags\\((0x)?(\\d*)\\)");
 	if (!regexp.exactMatch(mEntry.message())) {
 		return;
 	}
