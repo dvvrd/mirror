@@ -5,6 +5,7 @@
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
 #include <QtCore/QString>
+#include <QtCore/QList>
 
 /// Windows API communicator.
 class Os
@@ -52,12 +53,21 @@ public:
 	static void releaseKey(Qt::Key key, Qt::KeyboardModifiers modifiers);
 
 private:
-	static void resizeWindow(QString const &windowTitle, QSize const &windowSize);
-
 	static void pressKey(Qt::Key key);
 	static void releaseKey(Qt::Key key);
+	static void pressModifiers(Qt::KeyboardModifiers modifiers);
+	static void releaseModifiers(Qt::KeyboardModifiers modifiers);
+	static QList<Qt::Key> modifiersToKeys(Qt::KeyboardModifiers modifiers);
+
+	static void resizeWindow(QString const &windowTitle, QSize const &windowSize);
 
 	static HWND windowHandle(QString const &title);
-	static QPoint windowPos(HWND handle);
-	static QPoint windowPos(QString const &title);
+	static QPoint screenPos(HWND handle, QPoint const &windowPoint);
+	static QPoint screenPos(QString const &title, QPoint const &windowPoint);
+
+	static void sendMouseEvent(int type);
+	static void sendWheelEvent(int type, int delta);
+	static void sendKeyEvent(int key, int keypress);
+
+	static int qtKeyToNative(Qt::Key key);
 };
