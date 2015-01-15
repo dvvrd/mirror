@@ -23,6 +23,8 @@ void EntryProcessor::process()
 
 	if (mEntry.message().startsWith("Mouse")) {
 		processMouseEntry();
+	} else if (mEntry.message().startsWith("Drop")) {
+		processDropEntry();
 	} else if (mEntry.message().startsWith("Wheel")) {
 		processWheelEntry();
 	} else if (mEntry.message().startsWith("Key")) {
@@ -66,6 +68,27 @@ void EntryProcessor::processMouseEntry()
 	} else if (action == "release") {
 		Os::releaseMouse(QPoint(x, y), button, title, QSize(width, height));
 	}
+}
+
+void EntryProcessor::processDropEntry()
+{
+	QRegExp const regexp("Drop in in QPoint\\((\\d+),(\\d+)\\) with target \"(.*)\" QSize\\((\\d+), (\\d+)\\)");
+	if (!regexp.exactMatch(mEntry.message())) {
+		return;
+	}
+
+	int const x = regexp.cap(1).toInt();
+	int const y = regexp.cap(2).toInt();
+
+	QString const title = regexp.cap(3);
+
+	int const width = regexp.cap(4).toInt();
+	int const height = regexp.cap(5).toInt();
+
+	VERBOSE(QString("Simulating drop (just mouse release), pos=(%1,%2), title=%3, size=(%4,%5)...\n")
+			.arg(QString::number(x), QString::number(y), title, QString::number(width), QString::number(height)));
+
+	Os::drop(QPoint(x, y), title, QSize(width, height));
 }
 
 void EntryProcessor::processWheelEntry()

@@ -2,6 +2,9 @@
 
 #include "defines.h"
 
+bool Os::mLeftButtonPressed = false;
+QPoint Os::mLastLeftButtonPress = QPoint();
+
 BOOL CALLBACK onWindow(HWND hwnd, LPARAM lParam)
 {
 	Q_UNUSED(lParam)
@@ -32,6 +35,11 @@ void Os::pressMouse(QPoint const &point, Qt::MouseButton button
 	int eventType;
 	switch(button) {
 	case Qt::LeftButton:
+		if (mLeftButtonPressed) {
+			releaseMouse(mLastLeftButtonPress, Qt::LeftButton, windowTitle, windowSize);
+		}
+		mLeftButtonPressed = true;
+		mLastLeftButtonPress = point;
 		eventType = MOUSEEVENTF_LEFTDOWN;
 		break;
 	case Qt::RightButton:
@@ -66,6 +74,7 @@ void Os::releaseMouse(QPoint const &point, Qt::MouseButton button
 	int eventType;
 	switch(button) {
 	case Qt::LeftButton:
+		mLeftButtonPressed = false;
 		eventType = MOUSEEVENTF_LEFTUP;
 		break;
 	case Qt::RightButton:
@@ -80,6 +89,14 @@ void Os::releaseMouse(QPoint const &point, Qt::MouseButton button
 	}
 
 	sendMouseEvent(eventType);
+}
+
+void Os::drop(QPoint const &point, QString const &windowTitle, QSize const &windowSize)
+{
+	// This movements will give application handlers some callbacks calls.
+	moveMouse(point - QPoint(1, 1), windowTitle);
+	moveMouse(point + QPoint(1, 1), windowTitle);
+	releaseMouse(point, Qt::LeftButton, windowTitle, windowSize);
 }
 
 void Os::simulateWheel(int deltaX, int deltaY, QPoint const &point
@@ -194,8 +211,10 @@ void Os::sendWheelEvent(int type, int delta)
 	SendInput(1, &input, sizeof(INPUT));
 }
 
+#include <QDebug>
 void Os::sendKeyEvent(int key, int keypress)
 {
+	qDebug() << "SENDING KEYBOARD" << key << keypress;
 	INPUT input = { 0, 0, 0, 0, 0, 0, 0 };
 	input.type = INPUT_KEYBOARD;
 	input.ki.wScan = 0;

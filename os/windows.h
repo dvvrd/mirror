@@ -33,6 +33,12 @@ public:
 	static void releaseMouse(QPoint const &point, Qt::MouseButton button
 			, QString const &windowTitle, QSize const &windowSize);
 
+	/// Simulates drop event. Just moves mouse into a given point and releases button.
+	/// @param point: The coordinates of the mouse cursor in window coordinate system.
+	/// @param windowTitle: The title that the window had at the moment of the action.
+	/// @param windowSize: The size in px that the window had at the moment of the action.
+	static void drop(QPoint const &point, QString const &windowTitle, QSize const &windowSize);
+
 	/// Simulates
 	/// @param deltaX: Wheel ticks by the x-axis.
 	/// @param deltaY: Wheel ticks by the y-axis.
@@ -70,4 +76,8 @@ private:
 	static void sendKeyEvent(int key, int keypress);
 
 	static int qtKeyToNative(Qt::Key key);
+
+	/// Mouse button will be released if this flag is true.
+	static bool mLeftButtonPressed;
+	static QPoint mLastLeftButtonPress;
 };

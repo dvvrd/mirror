@@ -13,6 +13,7 @@ public:
 
 private:
 	void processMouseEntry();
+	void processDropEntry();
 	void processWheelEntry();
 	void processKeyEntry();
 	void processGestureMovement();
